@@ -1,7 +1,15 @@
 
 import whisper
 from langdetect import detect
-from googletrans import Translator
+# Replace:
+# from googletrans import Translator
+
+# With:
+from deep_translator import GoogleTranslator
+
+def translate_to_english(text):
+    return GoogleTranslator(source='auto', target='en').translate(text)
+
 from transformers import pipeline
 from fpdf import FPDF
 import os
