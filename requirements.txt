@@ -1,0 +1,7 @@
+openai-whisper
+ffmpeg-python
+googletrans==4.0.0-rc1
+langdetect
+transformers
+torch
+fpdf
