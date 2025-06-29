@@ -17,9 +17,24 @@ import os
 model = whisper.load_model("base")
 summarizer = pipeline("summarization", model="t5-small")
 
+from pydub import AudioSegment
+import whisper
+import os
+
+model = whisper.load_model("base")
+
 def transcribe_audio(audio_path):
-    result = model.transcribe(audio_path)
-    return result['text']
+    # Convert to WAV in 16kHz mono (Whisper needs this)
+    converted_path = "converted_whisper.wav"
+    audio = AudioSegment.from_file(audio_path)
+    audio = audio.set_frame_rate(16000).set_channels(1)
+    audio.export(converted_path, format="wav")
+
+    # Transcribe using Whisper
+    result = model.transcribe(converted_path)
+    os.remove(converted_path)
+    return result["text"]
+
 
 def detect_language(text):
     return detect(text)
